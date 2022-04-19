@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -6,8 +8,8 @@ import java.util.Scanner;
 
 public class Graph {
     private class Vertex implements Comparable<Vertex>{
-        private String id;
-        private LinkedList<Edge> edges;
+        private String id = "";
+        private LinkedList<Edge> edges = new LinkedList<>();
         public Vertex(String id){
             this.id = id;
         }
@@ -42,9 +44,9 @@ public class Graph {
         }
     }
 
-    private ArrayList<Vertex> vertices;
-    private int numVertices;
-    private int maxNum;
+    private ArrayList<Vertex> vertices = new ArrayList<>();
+    private int numVertices = 0;
+    private int maxNum = 0;
 
     public Graph(int maximum){
         vertices = new ArrayList<>();
@@ -67,7 +69,7 @@ public class Graph {
     }
 
     public boolean addEdge(String from, String to){
-        if(vertices.contains(new Vertex(from)) && vertices.contains(new Vertex(to))) return false;
+        if(!(vertices.contains(new Vertex(from)) && vertices.contains(new Vertex(to)))) return false;
         addE(from, to);     // use a helper method which could be reused by another method. 
         return true;
 
@@ -75,7 +77,7 @@ public class Graph {
 
     public boolean addEdge(String from, String[] tolist){
         for(int i = 0; i < tolist.length; i++){
-            if(vertices.contains(new Vertex(from)) && vertices.contains(new Vertex(tolist[i]))) return false;
+            if(!(vertices.contains(new Vertex(from)) && vertices.contains(new Vertex(tolist[i])))) return false;
             addE(from, tolist[i]);
         }
         return false;
@@ -96,14 +98,16 @@ public class Graph {
     }
 
     public void printGraph(){
-        Vertex[] tempArray = (Graph.Vertex[]) vertices.toArray();
-        Arrays.sort(tempArray);
-        for(int i = 0; i < tempArray.length; i++){
-            System.out.print(tempArray[i].id + " ");
-            Edge[] edgeArray = (Graph.Edge[]) tempArray[i].edges.toArray();
+        Vertex[] vertex = new Vertex[numVertices];
+        vertex = vertices.toArray(vertex);
+        Arrays.sort(vertex);
+        for(int i = 0; i < vertex.length; i++){
+            System.out.print(vertex[i].id + " ");
+            Edge[] edgeArray = new Edge[vertex[i].edges.size()];
+            edgeArray = vertex[i].edges.toArray(edgeArray);
             Arrays.sort(edgeArray);
             for(int j = 0; j < edgeArray.length; j++){
-                System.out.print(edgeArray[i] + " ");
+                System.out.print(edgeArray[j].endNode.id + " ");
             }
             System.out.println(" ");
         }
@@ -113,17 +117,25 @@ public class Graph {
         this.maxNum = maximum;
     }
 
-    public Graph read(String fileName){
-        Scanner sc = new Scanner(fileName);
+    public static Graph read(String fileName) throws FileNotFoundException{
+        Scanner sc = new Scanner(new File(fileName));
         Graph graph = new Graph(10000);
+        ArrayList<String[]> nodeEdge = new ArrayList<>();
         while(sc.hasNextLine()){
             String temp = sc.nextLine();
             String[] array = temp.split("\\s");
-            graph.addNode(array[0]);
-            for(int i = 1; i < array.length; i++){
-                graph.addEdge(array[0], array[i]);
+            nodeEdge.add(array);
+        }
+
+        for(int i = 0; i < nodeEdge.size(); i++){
+            graph.addNode(nodeEdge.get(i) [0]);
+        }
+        for(int i = 0; i < nodeEdge.size(); i++){
+            for(int j = 1; j < nodeEdge.get(i).length; j++){
+                graph.addEdge(nodeEdge.get(i)[0], nodeEdge.get(i)[j]);
             }
         }
+        sc.close();
         return graph;
     }
 
@@ -171,6 +183,11 @@ public class Graph {
         }
         vertices.remove(position);
         numVertices--;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Graph graph = Graph.read("/Users/daniel.l/Code/git/233-6/graph.txt");
+        graph.printGraph();
     }
 }
 
