@@ -78,3 +78,11 @@ Finish BFS method.
 
 Finish secondShortestPath method. Use BFS method and another field named ‘done’ which enabled the algorithm traverse twice to find the path. 
 
+4.20 12:56
+
+Fix the bug that secondShortestPath and BFS could not work well. The reason is the push() method of LinkedList actually work for a stack but not a queue. 
+
+50% complete
+
+<hr>
+
