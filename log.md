@@ -86,3 +86,29 @@ Fix the bug that secondShortestPath and BFS could not work well. The reason is t
 
 <hr>
 
+4.20 14:07
+
+Reuse addNode, removeNode method from Graph.java to WeightGraph.java.
+
+Slightly modify the Edge class and addEdge method so that they could be reused in weightGraph class. 
+
+4.20 14:22
+
+Slightly modify the printGraph and read method so that they could be reused in weightGraph class. 
+
+4.20 15:03
+
+Implement neightbors field in Vertex class. One is used to track how many directed edges is pointed to this node, which would be used in secondShortestPath. 
+
+4.20 16:41
+
+Finish shortestPath by implementing dijkstra algorithm. Fix bug caused by wrong assignment of parent. 
+
+4.20 17:02
+
+Finish secondShortestPath by implementing dijkstra algorithm and find second neighbor. 
+
+4.20 17:20
+
+Finish demonstration. Fix the bug that second shortest Path did not iterates the costs. 
+

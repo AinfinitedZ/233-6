@@ -84,7 +84,7 @@ public class Graph {
             if(!(vertices.contains(new Vertex(from)) && vertices.contains(new Vertex(tolist[i])))) return false;
             addE(from, tolist[i]);
         }
-        return false;
+        return true;
     }
 
     public boolean removeNode(String name){
