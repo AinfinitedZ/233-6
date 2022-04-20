@@ -50,3 +50,31 @@ Forget an ^ sign in addEdge().
 
 Replace toArray with toArray(T[]). That method makes life easier when export Lists that should be sorted. 
 
+4.19 16:19
+
+Use a two dimension array in read() method. One would read all nodes first and then add edges. 
+
+10% complete
+
+<hr>
+
+4.19 16:45
+
+Use -1 as parent of first node to avoid nullPointerException. Pass a ArrayList<String> that store the path in argument of DFS which executed recursively. 
+
+4.19 17:35
+
+Finish DFS method. 
+
+4.20 11:10
+
+Fix the bug of DFS that some path could be displayed. Implement a sort method that could sort the neighbor orders. 
+
+4.20 11:58
+
+Finish BFS method. 
+
+4.20 12:28
+
+Finish secondShortestPath method. Use BFS method and another field named ‘done’ which enabled the algorithm traverse twice to find the path. 
+
