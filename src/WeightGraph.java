@@ -10,17 +10,15 @@ import java.util.Scanner;
 public class WeightGraph {
     private class Vertex implements Comparable<Vertex>{
         private String id = "";
-        private boolean encountered;
-        private boolean done;
         private Vertex parent;
         private int cost;
         private LinkedList<Edge> edges = new LinkedList<>();
-        private ArrayList<Vertex> neightbors = new ArrayList<>();
+        private ArrayList<Vertex> neightbors = new ArrayList<>();   // store all start nodes that pointed to this vertex.  
         public Vertex(String id){
             this.id = id;
         }
         @Override
-        public boolean equals(Object o){
+        public boolean equals(Object o){                            // justify whether a vertex is equal to another. 
             if(o == this) return true;
             if(!(o instanceof Vertex)) return false;
 
@@ -28,10 +26,11 @@ public class WeightGraph {
             return id.equals(vertex.id);
         }
         @Override
-        public int compareTo(Vertex o) {
+        public int compareTo(Vertex o) {                            // return a integer represent order of two nodes by comparing their id in alphabetical order.  
             return id.compareTo(o.id);
         }
-        public Edge findEdge(String to){
+        public Edge findEdge(String to){                            
+            if(!vertices.contains(new Vertex(to))) return new Edge();
             Edge edge = new Edge();
             edge.endNode = new Vertex(to);
             edge = edges.get(edges.indexOf(edge));
@@ -40,8 +39,8 @@ public class WeightGraph {
     }
 
     private class Edge implements Comparable<Edge>{
-        private Vertex startNode;
-        private Vertex endNode;
+        private Vertex startNode = new Vertex("");
+        private Vertex endNode = new Vertex("");
         private int weight;
         @Override
         public boolean equals(Object o){
@@ -76,7 +75,7 @@ public class WeightGraph {
 
     public boolean addNode(String name){
         if(numVertices == maxNum || isExist(name)) return false;
-        addN(name);         // use a helper method which could be reused by another method. 
+        addN(name);                 // use a helper method which could be reused by another method. 
         return true;
     }
 
@@ -92,7 +91,6 @@ public class WeightGraph {
         if(!(vertices.contains(new Vertex(from)) && vertices.contains(new Vertex(to)))) return false;
         addE(from, to, weight);     // use a helper method which could be reused by another method. 
         return true;
-
     }
 
     public boolean addWeightEdge(String from, String[] tolist, int[] weightlist){
@@ -159,8 +157,8 @@ public class WeightGraph {
         if(!isExist(from) || !isExist(to)) return new String[0];
         ArrayList<String> result = new ArrayList<>();
         String[] type = new String[0];
-        Vertex vFrom = vertices.get(vertices.indexOf(new Vertex(from)));
-        Vertex vTo = vertices.get(vertices.indexOf(new Vertex(to)));
+        Vertex vFrom = findVertex(from);
+        Vertex vTo = findVertex(to);
         dijShortestPath(vFrom);
         while(vTo != null){
             result.add(vTo.id);
@@ -173,23 +171,34 @@ public class WeightGraph {
         if(!isExist(from) || !isExist(to)) return new String[0];
         ArrayList<String> result = new ArrayList<>();
         String[] type = new String[0];
-        Vertex vFrom = vertices.get(vertices.indexOf(new Vertex(from)));
-        Vertex vTo = vertices.get(vertices.indexOf(new Vertex(to)));
-        if(vTo.neightbors.size() < 2) return new String[0];
-        dijShortestPath(vFrom);
+        Vertex vFrom = findVertex(from);
+        Vertex vTo = findVertex(to);
+        Vertex ptr = vTo;
         int cost = Integer.MAX_VALUE;
-        Vertex secondParent = new Vertex("");
-        for (Vertex vertex : vTo.neightbors) {
-            Edge edge = vertex.findEdge(vTo.id);
-            if(!vertex.equals(vTo.parent) && cost > (vertex.cost + edge.weight)){
-                cost = vertex.cost + edge.weight;
-                secondParent = vertex;
+        int difference = Integer.MAX_VALUE;
+        Edge newEdge = new Edge();
+        Edge secondEdge = new Edge();
+        dijShortestPath(vFrom);
+        while(ptr.parent != null){
+            for (Vertex vertex : ptr.neightbors) {
+                Edge edge = vertex.findEdge(ptr.id);
+                if(!vertex.equals(ptr.parent) && cost > (vertex.cost + edge.weight)){
+                    cost = vertex.cost + edge.weight;
+                    newEdge = edge;
+                }
             }
+            if(!newEdge.equals(new Edge()) && newEdge.startNode.cost - newEdge.endNode.cost + newEdge.weight < difference){
+                difference = newEdge.startNode.cost - newEdge.endNode.cost + newEdge.weight;
+                secondEdge = newEdge;
+            }
+            ptr = ptr.parent;
+            cost = Integer.MAX_VALUE;
         }
-        result.add(vTo.id);
-        while(secondParent != null){
-            result.add(secondParent.id);
-            secondParent = secondParent.parent;
+        if(secondEdge.equals(new Edge())) return new String[0];     // if second edge is not found, namely, there is only one path to target. 
+        secondEdge.endNode.parent = secondEdge.startNode;           // one actually change the pointer of node. 
+        while(vTo != null){
+            result.add(vTo.id);
+            vTo = vTo.parent;
         }
         return result.toArray(type);
     }
@@ -258,6 +267,13 @@ public class WeightGraph {
             }
         }
     }
+
+    private Vertex findVertex(String string){
+        Vertex vertex = new Vertex(string);
+        vertex = vertices.get(vertices.indexOf(vertex));
+        return vertex;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         WeightGraph graph = new WeightGraph(100);
         graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/weightgraph.txt");
@@ -278,14 +294,30 @@ public class WeightGraph {
         System.out.print("\nMore complex graph: \n");
         graph.printGraph();
         System.out.print("Shortest Path: \n");
-        path = graph.shortestPath("A", "F");
+        path = graph.shortestPath("A", "J");
         for(int i = 0; i < path.length; i++){
             System.out.print(path[i] + " ");
         } 
         System.out.print("\nSecond Shortest Path: \n");
-        path = graph.secondShortestPath("A", "F");
+        path = graph.secondShortestPath("A", "J");
         for(int i = 0; i < path.length; i++){
             System.out.print(path[i] + " ");
         }
+
+        graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/weightgraphoneway.txt");
+        System.out.print("\nOnly one way: \n");
+        graph.printGraph();
+        System.out.print("Shortest Path: \n");
+        path = graph.shortestPath("A", "D");
+        for(int i = 0; i < path.length; i++){
+            System.out.print(path[i] + " ");
+        } 
+        System.out.print("\nSecond Shortest Path: \n");
+        path = graph.secondShortestPath("A", "D");
+        for(int i = 0; i < path.length; i++){
+            System.out.print(path[i] + " ");
+        }
+        System.out.print("\n");
     }
+
 }
