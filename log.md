@@ -112,3 +112,35 @@ Finish secondShortestPath by implementing dijkstra algorithm and find second nei
 
 Finish demonstration. Fix the bug that second shortest Path did not iterates the costs. 
 
+4.21 09:36
+
+Modify bfs in graph.java. Now this method would not return path that has same length with optimal one. 
+
+4.21 09:52
+
+Modify secondPath in weightgraph. Now this method would not return path that has same length with optimal one. 
+
+<hr>
+
+90% complete
+
+4.21 18:22
+
+Add comments to weightgraph.
+
+4.21 20:26
+
+Add comments to graph.
+
+Extra credit: 
+
+<img src="/Users/daniel.l/Library/Application Support/typora-user-images/image-20220421215220172.png" alt="image-20220421215220172" style="zoom:150%;" />
+
+Shortest Path from cleveland to cincinnati: 
+Cleveland -> Columbus -> Cincinnati -> 	249 miles
+Second Shortest Path from cleveland to cincinnati: 
+Cleveland -> Toledo -> Cincinnati -> 			317 miles
+Shortest Path from cleveland to evansville: 
+Cleveland -> Columbus -> Cincinnati -> Louisville -> Evansville -> 	468 miles
+Second Shortest Path from cleveland to evansville: 
+Cleveland -> Toledo -> Fort_Wayne -> Indianapolis -> Bloomington -> Evansville -> 513 miles

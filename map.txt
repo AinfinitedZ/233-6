@@ -1,0 +1,11 @@
+Toledo 115 Cleveland 202 Cincinnati 99 Fort_Wayne
+Cleveland 115 Toledo 134 Pittsburgh 142 Columbus
+Pittsburgh 134 Cleveland 185 Columbus 373 Lexington
+Columbus 142 Cleveland 185 Pittsburgh 201 Indianapolis 107 Cincinnati
+Cincinnati 202 Toledo 107 Columbus 112 Indianapolis 100 Louisville 83 Lexington
+Louisville 100 Cincinnati 119 Evansville 72 Lexington 114 Indianapolis
+Evansville 119 Louisville 123 Bloomington
+Lexington 373 Pittsburgh 83 Cincinnati 72 Louisville
+Bloomington 123 Evansville 51 Indianapolis
+Fort_Wayne 99 Toledo 126 Indianapolis
+Indianapolis 201 Columbus 112 Cincinnati 114 Louisville 51 Bloomington 126 Fort_Wayne
