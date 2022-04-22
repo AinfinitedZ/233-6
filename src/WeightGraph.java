@@ -363,7 +363,7 @@ public class WeightGraph {
         graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/weightgraph.txt");
         System.out.print("\nFirst graph: \n");
         graph.printGraph();
-        System.out.print("Shortest Path: \n");
+        System.out.print("\nShortest Path: \n");
         String[] path = graph.shortestPath("A", "F");
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
@@ -373,11 +373,11 @@ public class WeightGraph {
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
         }
-
+        System.out.println("");
         graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/weightgraphcomplex.txt");
         System.out.print("\nMore complex graph: \n");
         graph.printGraph();
-        System.out.print("Shortest Path: \n");
+        System.out.print("\nShortest Path: \n");
         path = graph.shortestPath("A", "J");
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
@@ -387,11 +387,11 @@ public class WeightGraph {
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
         }
-
+        System.out.println("");
         graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/weightgraphoneway.txt");
         System.out.print("\nOnly one way: \n");
         graph.printGraph();
-        System.out.print("Shortest Path: \n");
+        System.out.print("\nShortest Path: \n");
         path = graph.shortestPath("A", "D");
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
@@ -401,11 +401,11 @@ public class WeightGraph {
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
         }
-        System.out.print("\n");
-
+        System.out.println("");
         graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/map.txt");
         System.out.print("\nRealistic Map: \n");
-        System.out.print("Shortest Path from cleveland to cincinnati: \n");
+        graph.printGraph();
+        System.out.print("\nShortest Path from cleveland to cincinnati: \n");
         path = graph.shortestPath("Cleveland", "Cincinnati");
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
@@ -415,8 +415,7 @@ public class WeightGraph {
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
         }
-        System.out.print("\n");
-        System.out.print("Shortest Path from cleveland to evansville: \n");
+        System.out.print("\nShortest Path from cleveland to evansville: \n");
         path = graph.shortestPath("Cleveland", "Evansville");
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");

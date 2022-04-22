@@ -390,21 +390,21 @@ public class Graph {
         String[] pathbfs = graph.BFS("A", "C", "alphabetical");
         String[] pathSec = graph.secondShortestPath("A","C");
         System.out.print("\nDFS with alphabetical: \n");
-        for(int i = 0; i < pathdfsAlpha.length; i++){
-            System.out.print(pathdfsAlpha[i] + " ");
+        for(int i = pathdfsAlpha.length - 1; i >= 0; i--){
+            System.out.print(pathdfsAlpha[i] + " -> ");
         } 
         System.out.print("\nDFS with reverse: \n");
-        for(int i = 0; i < pathdfsRever.length; i++){
-            System.out.print(pathdfsRever[i] + " ");
+        for(int i = pathdfsRever.length - 1; i >= 0; i--){
+            System.out.print(pathdfsRever[i] + " -> ");
         } 
-        System.out.println("\nBFS: ");
-        for(int i = 0; i < pathbfs.length; i++){
-            System.out.print(pathbfs[i] + " ");
-        }
-        System.out.println("\nSecond: ");
-        for(int i = 0; i < pathSec.length; i++){
-            System.out.print(pathSec[i] + " ");
-        }
+        System.out.print("\nBFS: \n");
+        for(int i = pathbfs.length - 1; i >= 0; i--){
+            System.out.print(pathbfs[i] + " -> ");
+        } 
+        System.out.print("\nSecond: \n");
+        for(int i = pathSec.length - 1; i >= 0; i--){
+            System.out.print(pathSec[i] + " -> ");
+        } 
         System.out.println("");
         System.out.print("\nAnother complex graph: \n");
         graph = Graph.read("/Users/daniel.l/Code/git/233-6/graphComplex.txt");
@@ -414,45 +414,45 @@ public class Graph {
         pathbfs = graph.BFS("A", "G", "alphabetical");
         pathSec = graph.secondShortestPath("A", "G");
         System.out.print("\nDFS with alphabetical: \n");
-        for(int i = 0; i < pathdfsAlpha.length; i++){
-            System.out.print(pathdfsAlpha[i] + " ");
-        }
-        System.out.print("\nDFS with reverse: \n");
-        for(int i = 0; i < pathdfsRever.length; i++){
-            System.out.print(pathdfsRever[i] + " ");
+        for(int i = pathdfsAlpha.length - 1; i >= 0; i--){
+            System.out.print(pathdfsAlpha[i] + " -> ");
         } 
-        System.out.println("\nBFS: ");
-        for(int i = 0; i < pathbfs.length; i++){
-            System.out.print(pathbfs[i] + " ");
-        }
-        System.out.println("\nSecond: ");
-        for(int i = 0; i < pathSec.length; i++){
-            System.out.print(pathSec[i] + " ");
-        }
+        System.out.print("\nDFS with reverse: \n");
+        for(int i = pathdfsRever.length - 1; i >= 0; i--){
+            System.out.print(pathdfsRever[i] + " -> ");
+        } 
+        System.out.print("\nBFS: \n");
+        for(int i = pathbfs.length - 1; i >= 0; i--){
+            System.out.print(pathbfs[i] + " -> ");
+        } 
+        System.out.print("\nSecond: \n");
+        for(int i = pathSec.length - 1; i >= 0; i--){
+            System.out.print(pathSec[i] + " -> ");
+        } 
         System.out.println("");
         System.out.print("\none way road graph: \n");
         graph = Graph.read("/Users/daniel.l/Code/git/233-6/graphoneway.txt");
         graph.printGraph();
         pathdfsAlpha = graph.DFS("A", "D", "alphabetical");
         pathdfsRever = graph.DFS("A", "D", "reverse");
-        pathbfs = graph.BFS("A", "D", "alphabetical");
-        pathSec = graph.secondShortestPath("A", "D");
+        pathbfs = graph.BFS("A", "C", "alphabetical");
+        pathSec = graph.secondShortestPath("A", "C");
         System.out.print("\nDFS with alphabetical: \n");
-        for(int i = 0; i < pathdfsAlpha.length; i++){
-            System.out.print(pathdfsAlpha[i] + " ");
-        }
-        System.out.print("\nDFS with reverse: \n");
-        for(int i = 0; i < pathdfsRever.length; i++){
-            System.out.print(pathdfsRever[i] + " ");
+        for(int i = pathdfsAlpha.length - 1; i >= 0; i--){
+            System.out.print(pathdfsAlpha[i] + " -> ");
         } 
-        System.out.println("\nBFS: ");
-        for(int i = 0; i < pathbfs.length; i++){
-            System.out.print(pathbfs[i] + " ");
-        }
-        System.out.println("\nSecond: ");
-        for(int i = 0; i < pathSec.length; i++){
-            System.out.print(pathSec[i] + " ");
-        }
+        System.out.print("\nDFS with reverse: \n");
+        for(int i = pathdfsRever.length - 1; i >= 0; i--){
+            System.out.print(pathdfsRever[i] + " -> ");
+        } 
+        System.out.print("\nBFS: \n");
+        for(int i = pathbfs.length - 1; i >= 0; i--){
+            System.out.print(pathbfs[i] + " -> ");
+        } 
+        System.out.print("\nSecond: \n");
+        for(int i = pathSec.length - 1; i >= 0; i--){
+            System.out.print(pathSec[i] + " -> ");
+        } 
         System.out.println("");
     }
 }
