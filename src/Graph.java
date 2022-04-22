@@ -99,8 +99,8 @@ public class Graph {
     public boolean addEdge(String from, String to){
         if(!(vertices.contains(new Vertex(from)) &&             // if the start point does not exist,
             vertices.contains(new Vertex(to)))) return false;   // or the end point does not exist, return false. 
-        addE(from, to);                                         // use a helper method which could be reused by another method. 
-        return true;
+        boolean succ = addE(from, to);                          // use a helper method which could be reused by another method. 
+        return succ;
 
     }
     /**
@@ -111,12 +111,14 @@ public class Graph {
      * @return whether all edges are inserted successfully. 
      */
     public boolean addEdge(String from, String[] tolist){
+        boolean indicator = true;
         for(int i = 0; i < tolist.length; i++){
             if(!(vertices.contains(new Vertex(from)) &&                         // if the start point does not exist, 
                     vertices.contains(new Vertex(tolist[i])))) return false;    // or the end point does not exist, return false. 
-            addE(from, tolist[i]);                                              // use a helper method which could be reused by another method.
+            boolean succ = addE(from, tolist[i]);                               // use a helper method which could be reused by another method.
+            if(indicator == true) indicator = succ;
         }
-        return true;
+        return indicator;
     }
     /**
      * Remove a vertex from the graph. Return true when this vertex is removed successfully, and not when this vertex is not.  
@@ -200,14 +202,22 @@ public class Graph {
      * @return the path from start point to end point
      */
     public String[] DFS(String from, String to, String neighborOrder){
-        if(!isExist(from) || !isExist(to)) return new String[0];        // if start point or end point does not exist
-        sort(neighborOrder);                                            // sort all vertex's neighbors
-        ArrayList<String> path = new ArrayList<>();
-        path = dfs(vertices.indexOf(new Vertex(from)), -1, path, vertices.indexOf(new Vertex(to))); // helper method
+        if(!isExist(from) || !isExist(to)) return new String[0];                        // if start point or end point does not exist
+        Vertex origin = findVertex(from);
+        Vertex target = findVertex(to);
+        Vertex ptr = target;
+        sort(neighborOrder);                                                            // sort all vertex's neighbors
+        dfs(vertices.indexOf(origin), -1, vertices.indexOf(target));                    // helper method
         String[] realPath = new String[0];
+        ArrayList<String> path = new ArrayList<>();
+        while(ptr != null){
+            path.add(ptr.id);
+            ptr = ptr.parent;
+        }   
+        if(!origin.equals(target) && path.size() == 1) return new String[0];
         realPath = path.toArray(realPath);
-        for (Vertex vertex : vertices) {                                // reset the status of each vertex.
-            vertex.encountered = false;
+        for (Vertex vertex : vertices) {                                                // reset the status of each vertex.
+            vertex.encountered = false;         
         }
         return realPath;
     }
@@ -226,9 +236,6 @@ public class Graph {
         ArrayList<String> path = bfs(origin, target);                       // helper method
         String[] realPath = new String[0];
         realPath = path.toArray(realPath);
-        for (Vertex vertex : vertices) {
-            vertex.encountered = false;                                     // reset the status of each vertex.
-        }
         return realPath;
     }
     /**
@@ -251,7 +258,7 @@ public class Graph {
         while(iterator.hasNext()){                                               // iterates all neighbors of end point
             Vertex neighbor = iterator.next().endNode;
             ArrayList<String> temp = bfs(origin, neighbor);                      // call-on bfs on neighbor
-            if(secondLength > temp.size() && temp.size() != optimalLength - 1){  // find least length path but not equal to optimal length
+            if(secondLength > temp.size() && temp.size() > optimalLength - 1){   // path length is least but not equal to optimal length       
                 path = temp;                                                     // update path and length
                 secondLength = temp.size();
             }
@@ -276,7 +283,7 @@ public class Graph {
         numVertices++;
     }
 
-    private void addE(String from, String to){
+    private boolean addE(String from, String to){
         Vertex startNode = findVertex(from);
         Vertex endNode = findVertex(to);
 
@@ -288,10 +295,12 @@ public class Graph {
         newEndEdge.startNode = endNode;
         newEndEdge.endNode = startNode;
 
-        if(!startNode.edges.contains(newEdge)){
+        boolean indicator = !startNode.edges.contains(newEdge);
+        if(indicator){
             startNode.edges.add(newEdge);
             endNode.edges.add(newEndEdge);   
         }
+        return indicator;
     }
 
     private void removeN(String name){
@@ -309,21 +318,17 @@ public class Graph {
         numVertices--;
     }
 
-    private ArrayList<String> dfs(Integer i, Integer parent, ArrayList<String> path, Integer target){
+    private void dfs(Integer i, Integer parent, Integer target){
+        if(vertices.get(target).encountered == true) return;                                // base case
         Vertex vertex = vertices.get(i); 
-        vertex.encountered = true;                                              // initialization
-        vertex.parent = (parent == -1) ? new Vertex("0") : vertices.get(parent);    // enable one to traversal back
+        vertex.encountered = true;                                                          // initialization
+        vertex.parent = (parent == -1) ? null : vertices.get(parent);                       // enable one to traversal back
         Iterator<Edge> iterator = vertex.edges.iterator();
         while(iterator.hasNext()){
             Edge curEdge = iterator.next();
             int j = vertices.indexOf(curEdge.endNode);
-            if(vertices.get(j).encountered == false) dfs(j, i, path, target);   // recursive case: if one's neighbor is not encountered.
-            if(vertices.get(target).encountered == true){                       // base case: target is encountered.
-                path.add(vertex.id);
-                return path;
-            }
+            if(vertices.get(j).encountered == false) dfs(j, i, target);                     // recursive case: if one's neighbor is not encountered
         }
-        return new ArrayList<String>();
     }
      
     private void sort(String neighborOrder){
@@ -366,6 +371,7 @@ public class Graph {
             path.add(target.id);
             target = target.parent;
         }
+        if(!origin.equals(target) && path.size() == 1) return new ArrayList<>();
         return path;
     }
 

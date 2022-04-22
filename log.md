@@ -132,9 +132,17 @@ Add comments to weightgraph.
 
 Add comments to graph.
 
+4.22 12:48
+
+Modify the DFS method. Fix the bug that it would wrongly recall the stacks. 
+
+
+
 Extra credit: 
 
 <img src="/Users/daniel.l/Library/Application Support/typora-user-images/image-20220421215220172.png" alt="image-20220421215220172" style="zoom:150%;" />
+
+ I have built a doubly directed, weight graph for part of American map, since dijkstra method is applied for non-negative weight, directed map.  
 
 Shortest Path from cleveland to cincinnati: 
 Cleveland -> Columbus -> Cincinnati -> 	249 miles
@@ -144,3 +152,4 @@ Shortest Path from cleveland to evansville:
 Cleveland -> Columbus -> Cincinnati -> Louisville -> Evansville -> 	468 miles
 Second Shortest Path from cleveland to evansville: 
 Cleveland -> Toledo -> Fort_Wayne -> Indianapolis -> Bloomington -> Evansville -> 513 miles
+
