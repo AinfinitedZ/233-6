@@ -383,7 +383,7 @@ public class Graph {
 
     public static void main(String[] args) throws FileNotFoundException {
         Graph graph = Graph.read("/Users/daniel.l/Code/git/233-6/graph.txt");
-        System.out.print("\nFirst graph: \n");
+        System.out.print("\nFirst graph: \n");                                          // graph as on instruction
         graph.printGraph();
         String[] pathdfsAlpha = graph.DFS("A", "C", "alphabetical");
         String[] pathdfsRever = graph.DFS("A", "C", "reverse");
@@ -391,11 +391,11 @@ public class Graph {
         String[] pathSec = graph.secondShortestPath("A","C");
         System.out.print("\nDFS with alphabetical: \n");
         for(int i = pathdfsAlpha.length - 1; i >= 0; i--){
-            System.out.print(pathdfsAlpha[i] + " -> ");
+            System.out.print(pathdfsAlpha[i] + " -> ");                                    // traversal neighbor B before neighbor D
         } 
         System.out.print("\nDFS with reverse: \n");
         for(int i = pathdfsRever.length - 1; i >= 0; i--){
-            System.out.print(pathdfsRever[i] + " -> ");
+            System.out.print(pathdfsRever[i] + " -> ");                                    // traversal neighbor D before neighbor B
         } 
         System.out.print("\nBFS: \n");
         for(int i = pathbfs.length - 1; i >= 0; i--){
@@ -403,7 +403,7 @@ public class Graph {
         } 
         System.out.print("\nSecond: \n");
         for(int i = pathSec.length - 1; i >= 0; i--){
-            System.out.print(pathSec[i] + " -> ");
+            System.out.print(pathSec[i] + " -> ");                                          // one should longer than BFS for at least one vertex
         } 
         System.out.println("");
         System.out.print("\nAnother complex graph: \n");
@@ -415,11 +415,11 @@ public class Graph {
         pathSec = graph.secondShortestPath("A", "G");
         System.out.print("\nDFS with alphabetical: \n");
         for(int i = pathdfsAlpha.length - 1; i >= 0; i--){
-            System.out.print(pathdfsAlpha[i] + " -> ");
+            System.out.print(pathdfsAlpha[i] + " -> ");                                      // traversal neighbor B before C
         } 
         System.out.print("\nDFS with reverse: \n");
         for(int i = pathdfsRever.length - 1; i >= 0; i--){
-            System.out.print(pathdfsRever[i] + " -> ");
+            System.out.print(pathdfsRever[i] + " -> ");                                      // traversal neighbor C before B
         } 
         System.out.print("\nBFS: \n");
         for(int i = pathbfs.length - 1; i >= 0; i--){
@@ -430,7 +430,7 @@ public class Graph {
             System.out.print(pathSec[i] + " -> ");
         } 
         System.out.println("");
-        System.out.print("\none way road graph: \n");
+        System.out.print("\none way road graph: \n");                            // one way road from A to C. D is disconnected. 
         graph = Graph.read("/Users/daniel.l/Code/git/233-6/graphoneway.txt");
         graph.printGraph();
         pathdfsAlpha = graph.DFS("A", "D", "alphabetical");
@@ -439,7 +439,7 @@ public class Graph {
         pathSec = graph.secondShortestPath("A", "C");
         System.out.print("\nDFS with alphabetical: \n");
         for(int i = pathdfsAlpha.length - 1; i >= 0; i--){
-            System.out.print(pathdfsAlpha[i] + " -> ");
+            System.out.print(pathdfsAlpha[i] + " -> ");                             // A to D is not found
         } 
         System.out.print("\nDFS with reverse: \n");
         for(int i = pathdfsRever.length - 1; i >= 0; i--){
@@ -447,11 +447,11 @@ public class Graph {
         } 
         System.out.print("\nBFS: \n");
         for(int i = pathbfs.length - 1; i >= 0; i--){
-            System.out.print(pathbfs[i] + " -> ");
+            System.out.print(pathbfs[i] + " -> ");                                  // there is only one way from A to C
         } 
         System.out.print("\nSecond: \n");
         for(int i = pathSec.length - 1; i >= 0; i--){
-            System.out.print(pathSec[i] + " -> ");
+            System.out.print(pathSec[i] + " -> ");                                  // so this line return empty array.
         } 
         System.out.println("");
     }

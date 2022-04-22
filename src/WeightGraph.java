@@ -118,8 +118,8 @@ public class WeightGraph {
     public boolean addWeightEdge(String from, String to, int weight){
         if(!(vertices.contains(new Vertex(from)) &&             // if the start point does not exist,
             vertices.contains(new Vertex(to)))) return false;   // or the end point does not exist, return false. 
-        addE(from, to, weight);                                 // use a helper method which could be reused by another method. 
-        return true;
+        boolean indicator = addE(from, to, weight);             // use a helper method which could be reused by another method. 
+        return indicator;
     }
     /**
      * Insert pathes between a set of ordered-pair vertexes. These ordered-pair share same start point a, and have different end point b, corresponding
@@ -131,12 +131,14 @@ public class WeightGraph {
      * @return whether these edges are connected successfully. 
      */
     public boolean addWeightEdge(String from, String[] tolist, int[] weightlist){
+        boolean indicator = true;
         for(int i = 0; i < tolist.length; i++){
             if(!(vertices.contains(new Vertex(from)) &&                         // if the start point does not exist, 
                     vertices.contains(new Vertex(tolist[i])))) return false;    // or the end point does not exist, return false. 
-            addE(from, tolist[i], weightlist[i]);                               // use a helper method which could be reused by another method. 
+            boolean succ = addE(from, tolist[i], weightlist[i]);                // use a helper method which could be reused by another method.
+            if(indicator == true) indicator = succ;
         }
-        return true;
+        return indicator;
     }
     /**
      * Remove a vertex from the graph. Return true when this vertex is removed successfully, and not when this vertex is not.  
@@ -299,7 +301,7 @@ public class WeightGraph {
         numVertices--;
     }
 
-    private void addE(String from, String to, Integer weight){
+    private boolean addE(String from, String to, Integer weight){
         int start = vertices.indexOf(new Vertex(from));
         int end = vertices.indexOf(new Vertex(to));
         Vertex startNode = vertices.get(start);
@@ -312,9 +314,11 @@ public class WeightGraph {
 
         endNode.neightbors.add(startNode);
 
-        if(!startNode.edges.contains(newEdge)){     // if there is not repeated edge,
+        boolean indicator = !startNode.edges.contains(newEdge);
+        if(indicator){     // if there is not repeated edge,
             startNode.edges.add(newEdge);
         }
+        return indicator;
     }
 
     /**
@@ -359,19 +363,19 @@ public class WeightGraph {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        WeightGraph graph = new WeightGraph(100);
+        WeightGraph graph = new WeightGraph(100);               // graph as on instruction
         graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/weightgraph.txt");
         System.out.print("\nFirst graph: \n");
-        graph.printGraph();
+        graph.printGraph();                             
         System.out.print("\nShortest Path: \n");
         String[] path = graph.shortestPath("A", "F");
         for(int i = path.length - 1; i >= 0; i--){
-            System.out.print(path[i] + " -> ");
+            System.out.print(path[i] + " -> ");                         // shortest path A -> D -> C -> F
         } 
         System.out.print("\nSecond Shortest Path: \n");
         path = graph.secondShortestPath("A", "F");
         for(int i = path.length - 1; i >= 0; i--){
-            System.out.print(path[i] + " -> ");
+            System.out.print(path[i] + " -> ");                         // second shortest path A -> B -> D -> C -> F
         }
         System.out.println("");
         graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/weightgraphcomplex.txt");
@@ -380,24 +384,24 @@ public class WeightGraph {
         System.out.print("\nShortest Path: \n");
         path = graph.shortestPath("A", "J");
         for(int i = path.length - 1; i >= 0; i--){
-            System.out.print(path[i] + " -> ");
+            System.out.print(path[i] + " -> ");                         // shortest path A -> C -> D -> G -> J  cost = 10
         } 
         System.out.print("\nSecond Shortest Path: \n");
         path = graph.secondShortestPath("A", "J");
-        for(int i = path.length - 1; i >= 0; i--){
-            System.out.print(path[i] + " -> ");
-        }
+        for(int i = path.length - 1; i >= 0; i--){  
+            System.out.print(path[i] + " -> ");                         // second shortest path A -> D -> G -> J. cost = 11
+        }                                                               // A -> B -> E -> J has a cost 10, which is as same as shortest path. 
         System.out.println("");
         graph = WeightGraph.readWeight("/Users/daniel.l/Code/git/233-6/weightgraphoneway.txt");
         System.out.print("\nOnly one way: \n");
         graph.printGraph();
         System.out.print("\nShortest Path: \n");
-        path = graph.shortestPath("A", "D");
+        path = graph.shortestPath("A", "E");                    // E isn't exist, and thus return nothing.
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
         } 
         System.out.print("\nSecond Shortest Path: \n");
-        path = graph.secondShortestPath("A", "D");
+        path = graph.secondShortestPath("A", "D");              // there is only one way from A to D, so this line return nothing. 
         for(int i = path.length - 1; i >= 0; i--){
             System.out.print(path[i] + " -> ");
         }

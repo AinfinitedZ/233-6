@@ -33,7 +33,7 @@ public class GraphTest {
 		assertTrue(isSuccAB);													// One should successfully insert a edge with two existed vertex
 		assertFalse(isSuccAE);													// One should not successfully insert a edge without two existed vertexs
 		assertFalse(isSuccRe);													// One should not successfully insert a edge when it is repeated. 
-		boolean isSuccAD = graph.addEdge("A", new String[]{"D"});			
+		boolean isSuccAD = graph.addEdge("A", new String[]{"C"});			
 		boolean isSuccABAC = graph.addEdge("A", new String[]{"B", "C"});
 		boolean isSuccABAD = graph.addEdge("A", new String[]{"B", "D"});
 		assertTrue(isSuccAD);													// return true only if all edges is inserted successful
